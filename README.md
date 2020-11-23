@@ -1,4 +1,4 @@
-# SYN flood 
+# TCP flood 
 
 #### Getting started
 ```shell script
